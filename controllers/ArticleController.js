@@ -33,15 +33,19 @@ const post = async (req, res) =>{
 }
 
 const get = async(req, res) =>{
-    const articles = await Article.find({}).populate({
-        path: 'author',
-        select: 'username picture roles'
-    }).sort({ 'createdAt' : -1 }).lean()
+    try{
+        const articles = await Article.find({}).populate({
+            path: 'author',
+            select: 'username picture roles'
+        }).sort({ 'createdAt' : -1 }).lean()
 
-    return res.status(200).json({
-        status: 200,
-        articles
-    })
+        return res.status(200).json({
+            status: 200,
+            articles
+        })
+    }catch(err){
+        res.send(err)
+    }
 }
 
 const getById = async (req, res) =>{
