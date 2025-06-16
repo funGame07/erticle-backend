@@ -46,7 +46,7 @@ const get = async(req, res) =>{
     }catch(err){
         return res.status(504).json({
             status:504,
-            err: err
+            err,
         })
     }
 }
