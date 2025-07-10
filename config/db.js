@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 async function db(){
     await mongoose.connect(
-        process.env.DB_URI
+        'mongodb+srv://elbert:passwords@cluster0.x56s9nj.mongodb.net/erticle'
     )
 }
 
