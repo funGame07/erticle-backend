@@ -34,7 +34,28 @@ const post = async (req, res) =>{
 
 const get = async(req, res) =>{
     try{
-        const articles = await Article.find({}).populate({
+        const articles = await Article.find({}).select('title thumbnail overview createdAt').populate({
+            path: 'author',
+            select: 'username picture roles'
+        }).sort({ 'createdAt' : -1 }).lean()
+
+        return res.status(200).json({
+            status: 200,
+            articles
+        })
+    }catch(err){
+        return res.status(504).json({
+            status:504,
+            err,
+        })
+    }
+}
+
+const getLimit = async (req, res) => {
+    const limit = req.params.limit
+
+    try{
+        const articles = await Article.find({}).where('thumbnail').ne(null).limit(limit).select('title thumbnail overview createdAt').populate({
             path: 'author',
             select: 'username picture roles'
         }).sort({ 'createdAt' : -1 }).lean()
@@ -53,7 +74,6 @@ const get = async(req, res) =>{
 
 const getById = async (req, res) =>{
     const {articleId, readerId} = req.params
-
     try{
         if(!mongoose.Types.ObjectId.isValid(articleId)) return res.json({
             status: 403,
@@ -250,6 +270,7 @@ const deleteArticle = async (req, res) =>{
 module.exports = {
     post,
     get,
+    getLimit,
     getById,
     deleteArticle,
     getBookmark,

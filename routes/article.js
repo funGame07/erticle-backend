@@ -12,6 +12,7 @@ route.post('/upload/image', upload.single('uploadImage'), (req, res) =>{
 
 route.post('/post', upload.single('thumbnail') , articleController.post)
 route.get('/get' , articleController.get)
+route.get('/get/limit/:limit', articleController.getLimit)
 route.get('/get/bookmark/:userId' , articleController.getBookmark)
 route.get('/get/:articleId/:readerId' , articleController.getById)
 route.patch('/update/bookmark/:articleId' , articleController.totalBookmarks)
