@@ -18,7 +18,7 @@ const config = {
     /* cors */
     cors: {
         origin: function(origin, cb){
-            if([process.env.FE_ORIGIN, process.env.BE_ORIGIN].indexOf(origin) != -1 }} !origin){
+            if([process.env.FE_ORIGIN, process.env.BE_ORIGIN].indexOf(origin) != -1 || !origin){
                 cb(null, true)
             }else{
                 cb(new Error(origin + ' not allowed by cors'))
